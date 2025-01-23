@@ -17,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -41,10 +42,10 @@ public class Articles {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
+	@ManyToOne(fetch = FetchType.LAZY, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST,
 			CascadeType.REFRESH })
-	@JoinTable(name = "user_articles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "article_id"))
-	private List<User> users;
+	@JoinColumn(name = "users_id")
+	private User user;
 
 	public Articles() {
 		super();
@@ -56,7 +57,6 @@ public class Articles {
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
-		this.users = users;
 	}
 
 	public Integer getId() {
@@ -99,19 +99,12 @@ public class Articles {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<User> getUsers() {
-		return users;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	public void addUser(User user) {
-		if (users == null) {
-			this.users = new ArrayList<>();
-		}
-		users.add(user);
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

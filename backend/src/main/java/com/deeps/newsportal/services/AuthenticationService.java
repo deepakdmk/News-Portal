@@ -12,6 +12,7 @@ import com.deeps.newsportal.repositories.UserRepository;
 
 @Service
 public class AuthenticationService {
+	
 	private final UserRepository userRepository;
 
 	private final PasswordEncoder passwordEncoder;
