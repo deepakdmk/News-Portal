@@ -1,15 +1,52 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
 .ArticleDetail {
   max-width: 800px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ArticleDetail .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .ArticleDetail h2 {
   text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.ArticleDetail hr {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 20px 0;
 }
 
 .ArticleDetail p {
   margin: 10px 0;
+  color: #555;
+}
+
+.ArticleDetail .author {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: right;
+  margin-top: 10px;
+}
+
+.ArticleDetail .createdAt {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 20px;
+  text-align: right;
 }

@@ -28,10 +28,10 @@ function ArticleDetail() {
   return (
     <div className="ArticleDetail">
       <h2>{article.title}</h2>
+      <hr />
       <p>{article.content}</p>
-      <p><small>By {article.author}</small></p>
-      <p><small>Created at: {new Date(article.createdAt).toLocaleString()}</small></p>
-      <p><small>Modified at: {new Date(article.modifiedAt).toLocaleString()}</small></p>
+      <div className="author">By {article.author}</div>
+      <div className="createdAt">Created at: {new Date(article.createdAt).toLocaleString()}</div>
     </div>
   );
 }

@@ -1,3 +1,10 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
 .Navbar {
   display: flex;
   justify-content: space-between;
@@ -9,14 +16,37 @@
 
 .Navbar h1 {
   margin: 0;
+  font-size: 1.8rem;
+}
+
+.Navbar-links {
+  display: flex;
+  align-items: center;
 }
 
 .Navbar-links a {
   color: white;
   text-decoration: none;
   margin-left: 20px;
+  font-size: 1rem;
+  transition: color 0.3s ease;
 }
 
 .Navbar-links a:hover {
-  text-decoration: underline;
+  color: #ffdd57;
+}
+
+.logout-button {
+  margin-left: 20px;
+  padding: 8px 16px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #ff1a1a;
 }

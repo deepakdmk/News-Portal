@@ -22,8 +22,13 @@ function UpdateArticle() {
           content: response.data.content,
         });
       } catch (error) {
-        setMessage('Failed to load article. Please try again.');
+        if (error.response && error.response.data && error.response.data.message) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage('Failed to load article. Please try again.');
+        }
       }
+      setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
     };
 
     fetchArticle();
@@ -39,20 +44,27 @@ function UpdateArticle() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
-    try {
-      const token = localStorage.getItem('token');
-      await axios.put('http://localhost:8080/articles/articles', { titleId: id, ...formData }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setMessage('Article updated successfully!');
-      navigate('/articles');
-    } catch (error) {
-      setMessage('Failed to update article. Please try again.');
+    if (window.confirm('Are you sure you want to update this article?')) {
+      setLoading(true);
+      try {
+        const token = localStorage.getItem('token');
+        await axios.put('http://localhost:8080/articles/articles', { titleId: id, ...formData }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setMessage('Article updated successfully!');
+        navigate('/articles');
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage('Failed to update article. Please try again.');
+        }
+      }
+      setLoading(false);
+      setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
     }
-    setLoading(false);
   };
 
   const handleCancel = () => {
@@ -72,15 +84,21 @@ function UpdateArticle() {
         setMessage('Article deleted successfully!');
         navigate('/articles');
       } catch (error) {
-        setMessage('Failed to delete article. Please try again.');
+        if (error.response && error.response.data && error.response.data.message) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage('Failed to delete article. Please try again.');
+        }
       }
       setLoading(false);
+      setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
     }
   };
 
   return (
     <div className="UpdateArticle">
       <h2>Update Article</h2>
+      {message && <div className="alert">{message}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label>
@@ -107,11 +125,10 @@ function UpdateArticle() {
         <button type="button" onClick={handleCancel} disabled={loading}>
           Cancel
         </button>
-        <button type="button" onClick={handleDelete} disabled={loading}>
+        <button type="button" className="delete-button" onClick={handleDelete} disabled={loading}>
           Delete
         </button>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

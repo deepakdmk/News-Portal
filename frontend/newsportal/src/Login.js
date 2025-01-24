@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import './Login.css';
 
 function Login() {
@@ -10,8 +10,18 @@ function Login() {
   });
 
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // Add messageType state
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.state && location.state.successMessage) {
+      setMessage(location.state.successMessage);
+      setMessageType('success'); // Set message type to success
+      setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
+    }
+  }, [location.state]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,19 +39,28 @@ function Login() {
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         setMessage('Login successful!');
+        setMessageType('success'); // Set message type to success
         navigate('/articles');
       } else {
         setMessage(response.data.message || 'Login failed. Please try again.');
+        setMessageType('error'); // Set message type to error
       }
     } catch (error) {
-      setMessage('Login failed. Please try again.');
+      if (error.response && error.response.data && error.response.data.message) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage('Failed to connect to server. Please contact admin.');
+      }
+      setMessageType('error'); // Set message type to error
     }
     setLoading(false);
+    setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
   };
 
   return (
     <div className="Login">
       <h2>Login</h2>
+      {message && <div className={`alert ${messageType}`}>{message}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Email:</label>
@@ -67,7 +86,6 @@ function Login() {
           {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

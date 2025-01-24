@@ -1,13 +1,23 @@
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+}
+
 .UpdateArticle {
   max-width: 600px;
-  margin: 0 auto;
+  margin: 50px auto;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .UpdateArticle h2 {
   text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
 .UpdateArticle form div {
@@ -17,12 +27,15 @@
 .UpdateArticle label {
   display: block;
   margin-bottom: 5px;
+  font-weight: bold;
 }
 
 .UpdateArticle input,
 .UpdateArticle textarea {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   box-sizing: border-box;
 }
 
@@ -44,6 +57,14 @@
 
 .UpdateArticle button:hover:not(:disabled) {
   background-color: #0056b3;
+}
+
+.UpdateArticle .delete-button {
+  background-color: #ff4d4d;
+}
+
+.UpdateArticle .delete-button:hover:not(:disabled) {
+  background-color: #ff1a1a;
 }
 
 .UpdateArticle p {

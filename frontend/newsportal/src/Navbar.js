@@ -19,7 +19,7 @@ function Navbar() {
         {token ? (
           <>
             <Link to="/articles">Article Management</Link>
-            <button onClick={handleLogout}>Logout</button>
+            <button className="logout-button" onClick={handleLogout}>Logout</button>
           </>
         ) : (
           <>

@@ -19,57 +19,31 @@ import com.deeps.newsportal.dto.ResponseDto;
 public class GlobalExceptionHandler {
 
 	// Generic Exception Handler
-	@ExceptionHandler(Exception.class)
+	@ExceptionHandler
 	public ResponseEntity<ResponseDto> handleBadRequestsException(Exception exc) {
 		ResponseDto error = new ResponseDto();
 		error.setStatus(HttpStatus.BAD_REQUEST.value());
 		error.setMessage(exc.getMessage());
 		error.setTimeStamp(System.currentTimeMillis());
-
-		// Return responseEntity
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
-	public ProblemDetail handleSecurityException(Exception exception) {
+	@ExceptionHandler
+	public ResponseEntity<ResponseDto> handleException(ArticleException exc) {
+		ResponseDto error = new ResponseDto();
+		error.setStatus(HttpStatus.NOT_FOUND.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(System.currentTimeMillis());
+		return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+	}
 
-		ProblemDetail errorDetail = null;
-
-		// TODO send this stack trace to an observability tool
-		exception.printStackTrace();
-
-		if (exception instanceof BadCredentialsException) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(401), exception.getMessage());
-			errorDetail.setProperty("description", "The username or password is incorrect");
-
-			return errorDetail;
-		}
-
-		if (exception instanceof AccountStatusException) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-			errorDetail.setProperty("description", "The account is locked");
-		}
-
-		if (exception instanceof AccessDeniedException) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-			errorDetail.setProperty("description", "You are not authorized to access this resource");
-		}
-
-		if (exception instanceof SignatureException) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-			errorDetail.setProperty("description", "The JWT signature is invalid");
-		}
-
-		if (exception instanceof ExpiredJwtException) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(403), exception.getMessage());
-			errorDetail.setProperty("description", "The JWT token has expired");
-		}
-
-		if (errorDetail == null) {
-			errorDetail = ProblemDetail.forStatusAndDetail(HttpStatusCode.valueOf(500), exception.getMessage());
-			errorDetail.setProperty("description", "Unknown internal server error.");
-		}
-
-		return errorDetail;
+	@ExceptionHandler
+	public ResponseEntity<ResponseDto> handleBadRequestsException(UserException exc) {
+		ResponseDto error = new ResponseDto();
+		error.setStatus(HttpStatus.BAD_REQUEST.value());
+		error.setMessage(exc.getMessage());
+		error.setTimeStamp(System.currentTimeMillis());
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 }

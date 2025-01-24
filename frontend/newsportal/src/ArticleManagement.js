@@ -19,8 +19,13 @@ function ArticleManagement() {
         });
         setArticles(response.data);
       } catch (error) {
-        setMessage('Failed to load articles. Please try again.');
+        if (error.response && error.response.data && error.response.data.message) {
+          setMessage(error.response.data.message);
+        } else {
+          setMessage('Failed to load articles. Please try again.');
+        }
       }
+      setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
     };
 
     fetchArticles();
@@ -37,8 +42,8 @@ function ArticleManagement() {
   return (
     <div className="ArticleManagement">
       <h2>Your Articles</h2>
+      {message && <div className="alert">{message}</div>}
       <button onClick={handleCreateArticle}>Create Article</button>
-      {message && <p>{message}</p>}
       <ul>
         {articles.map((article) => (
           <li key={article.titleId}>

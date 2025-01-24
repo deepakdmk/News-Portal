@@ -11,6 +11,7 @@ function Registration() {
   });
 
   const [message, setMessage] = useState('');
+  const [messageType, setMessageType] = useState(''); // Add messageType state
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -29,19 +30,28 @@ function Registration() {
       const response = await axios.post('http://localhost:8080/auth/signup', formData);
       if (response.data.status === 0) {
         setMessage('Registration successful!');
-        navigate('/login');
+        setMessageType('success'); // Set message type to success
+        navigate('/login', { state: { successMessage: 'Registration successful! You may now login.' } });
       } else {
-        setMessage(response.data.message );
+        setMessage(response.data.message);
+        setMessageType('error'); // Set message type to error
       }
     } catch (error) {
-      setMessage('Registration failed. Please try again.');
+      if (error.response && error.response.data && error.response.data.message) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage('Failed to connect to server. Please contact admin.');
+      }
+      setMessageType('error'); // Set message type to error
     }
     setLoading(false);
+    setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
   };
 
   return (
     <div className="Registration">
       <h2>Register</h2>
+      {message && <div className={`alert ${messageType}`}>{message}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Full Name:</label>
@@ -77,7 +87,6 @@ function Registration() {
           {loading ? 'Registering...' : 'Register'}
         </button>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }
