@@ -1,0 +1,42 @@
+.Home {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.Home h2 {
+  text-align: center;
+}
+
+.articles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.article-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  width: calc(33.333% - 20px);
+  box-sizing: border-box;
+}
+
+.article-card h3 {
+  margin: 0 0 10px;
+}
+
+.article-card p {
+  margin: 5px 0;
+}
+
+.article-card a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.article-card a:hover {
+  text-decoration: underline;
+}

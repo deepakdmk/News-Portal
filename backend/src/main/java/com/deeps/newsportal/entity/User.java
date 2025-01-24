@@ -10,6 +10,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -51,8 +53,8 @@ public class User implements UserDetails {
 	private Date updatedAt;
 
 	// change this is lazy loading later
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = { CascadeType.DETACH, CascadeType.MERGE,
-			CascadeType.PERSIST, CascadeType.REFRESH })
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Articles> articles;
 
 	@Override
@@ -152,6 +154,14 @@ public class User implements UserDetails {
 		return true;
 	}
 
+	public List<Articles> getArticles() {
+		return articles;
+	}
+
+	public void setArticles(List<Articles> articles) {
+		this.articles = articles;
+	}
+
 	public void addArticles(Articles article) {
 		if (articles == null) {
 			this.articles = new ArrayList<>();
@@ -159,14 +169,6 @@ public class User implements UserDetails {
 		articles.add(article);
 
 		article.setUser(this);
-	}
-
-	public List<Articles> getArticles() {
-		return articles;
-	}
-
-	public void setArticles(List<Articles> articles) {
-		this.articles = articles;
 	}
 
 }

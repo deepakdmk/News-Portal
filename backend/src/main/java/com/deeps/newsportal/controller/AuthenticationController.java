@@ -10,6 +10,7 @@ import com.deeps.newsportal.dto.LoginResponse;
 import com.deeps.newsportal.dto.LoginUserDto;
 import com.deeps.newsportal.dto.RegisterUserDto;
 import com.deeps.newsportal.entity.User;
+import com.deeps.newsportal.exceptions.UserException;
 import com.deeps.newsportal.services.AuthenticationService;
 import com.deeps.newsportal.services.JwtService;
 
@@ -26,10 +27,14 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/signup")
-	public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
-		User registeredUser = authenticationService.signup(registerUserDto);
+	public ResponseEntity<?> register(@RequestBody RegisterUserDto registerUserDto) {
+		if (!(authenticationService.checkForDuplicates(registerUserDto.getEmail()))) {
+			User registeredUser = authenticationService.create(registerUserDto);
+			RegisterUserDto registration = authenticationService.createResponse(registeredUser);
+			return ResponseEntity.ok(registration);
+		}
+		throw new UserException("User is registered, please login");
 
-		return ResponseEntity.ok(registeredUser);
 	}
 
 	@PostMapping("/login")

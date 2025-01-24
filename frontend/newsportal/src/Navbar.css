@@ -1,0 +1,22 @@
+.Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+}
+
+.Navbar h1 {
+  margin: 0;
+}
+
+.Navbar-links a {
+  color: white;
+  text-decoration: none;
+  margin-left: 20px;
+}
+
+.Navbar-links a:hover {
+  text-decoration: underline;
+}

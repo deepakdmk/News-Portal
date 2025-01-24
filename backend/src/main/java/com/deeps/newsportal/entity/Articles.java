@@ -107,4 +107,10 @@ public class Articles {
 		this.user = user;
 	}
 
+	@Override
+	public String toString() {
+		return "Articles [id=" + id + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
+				+ ", updatedAt=" + updatedAt + ", user=" + user + "]";
+	}
+
 }

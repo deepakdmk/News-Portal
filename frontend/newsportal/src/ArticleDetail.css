@@ -1,0 +1,15 @@
+.ArticleDetail {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.ArticleDetail h2 {
+  text-align: center;
+}
+
+.ArticleDetail p {
+  margin: 10px 0;
+}

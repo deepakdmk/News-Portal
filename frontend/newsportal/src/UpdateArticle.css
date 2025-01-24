@@ -1,0 +1,52 @@
+.UpdateArticle {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.UpdateArticle h2 {
+  text-align: center;
+}
+
+.UpdateArticle form div {
+  margin-bottom: 15px;
+}
+
+.UpdateArticle label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.UpdateArticle input,
+.UpdateArticle textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.UpdateArticle button {
+  margin-right: 10px;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.UpdateArticle button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+.UpdateArticle button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.UpdateArticle p {
+  text-align: center;
+  color: red;
+}
