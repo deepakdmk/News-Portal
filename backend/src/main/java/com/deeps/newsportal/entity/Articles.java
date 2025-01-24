@@ -47,16 +47,20 @@ public class Articles {
 	@JoinColumn(name = "users_id")
 	private User user;
 
+	@Column(name = "isActive")
+	private String isActive;
+
 	public Articles() {
 		super();
 	}
 
-	public Articles(String title, String content, Date createdAt, Date updatedAt, List<User> users) {
+	public Articles(String title, String content, Date createdAt, Date updatedAt, String isActive) {
 		super();
 		this.title = title;
 		this.content = content;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.isActive = isActive;
 	}
 
 	public Integer getId() {
@@ -110,7 +114,9 @@ public class Articles {
 	@Override
 	public String toString() {
 		return "Articles [id=" + id + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
-				+ ", updatedAt=" + updatedAt + ", user=" + user + "]";
+				+ ", updatedAt=" + updatedAt + ", user=" + user + ", isActive=" + isActive + "]";
 	}
+
+
 
 }

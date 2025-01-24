@@ -19,6 +19,9 @@ function Navbar() {
         {token ? (
           <>
             <Link to="/articles">Article Management</Link>
+            <Link to="/account" className="account-link">
+              <i className="fas fa-cog"></i>
+            </Link>
             <button className="logout-button" onClick={handleLogout}>Logout</button>
           </>
         ) : (

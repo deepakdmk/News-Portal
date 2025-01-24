@@ -14,12 +14,6 @@ body {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.ArticleDetail .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .ArticleDetail h2 {
   text-align: center;
   font-size: 2.5rem;
@@ -49,4 +43,22 @@ body {
   color: #888;
   margin-top: 20px;
   text-align: right;
+}
+
+.floating-button {
+  position: fixed;
+  top: 80px; /* Adjust this value based on the height of your navbar */
+  left: 20px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+}
+
+.floating-button:hover {
+  background-color: #0056b3;
 }

@@ -28,11 +28,15 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		http.cors().and().csrf().disable().authorizeHttpRequests().requestMatchers("/auth/**", "/articles/public/**")
+		http.cors().and().csrf().disable().authorizeHttpRequests()
+				.requestMatchers("/auth/**", "/articles/public/**", "/v3/api-docs/**", "/swagger-ui/**",
+						"/swagger-ui.html", "/h2-console/**")
 				.permitAll().anyRequest().authenticated().and().sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authenticationProvider(authenticationProvider)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+
+		http.headers().frameOptions().sameOrigin();
 
 		return http.build();
 	}

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './ArticleDetail.css';
 
 function ArticleDetail() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);
   const [message, setMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -21,12 +22,17 @@ function ArticleDetail() {
     fetchArticle();
   }, [id]);
 
+  const handleReturn = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
   if (!article) {
     return <div className="ArticleDetail">{message || 'Loading...'}</div>;
   }
 
   return (
     <div className="ArticleDetail">
+      <button className="floating-button" onClick={handleReturn}>Return</button>
       <h2>{article.title}</h2>
       <hr />
       <p>{article.content}</p>

@@ -9,6 +9,7 @@ import ArticleManagement from './ArticleManagement';
 import CreateArticle from './CreateArticle';
 import UpdateArticle from './UpdateArticle';
 import ArticleDetail from './ArticleDetail';
+import AccountManagement from './AccountManagement';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/create-article" element={<CreateArticle />} />
           <Route path="/update-article/:id" element={<UpdateArticle />} />
           <Route path="/articles/:id" element={<ArticleDetail />} />
+          <Route path="/account" element={<AccountManagement />} />
         </Routes>
       </div>
     </Router>

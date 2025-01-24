@@ -5,13 +5,17 @@ import './Home.css';
 
 function Home() {
   const [articles, setArticles] = useState([]);
+  const [filteredArticles, setFilteredArticles] = useState([]);
   const [message, setMessage] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
     const fetchArticles = async () => {
       try {
         const response = await axios.get('http://localhost:8080/articles/public');
+        console.log('Fetched articles:', response.data); // Debugging line
         setArticles(response.data);
+        setFilteredArticles(response.data);
       } catch (error) {
         setMessage('Failed to load articles. Please try again.');
       }
@@ -19,6 +23,20 @@ function Home() {
 
     fetchArticles();
   }, []);
+
+  const handleSearchChange = (e) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    if (term === '') {
+      setFilteredArticles(articles);
+    } else {
+      const filtered = articles.filter(article =>
+        article.title.toLowerCase().includes(term.toLowerCase()) ||
+        article.content.toLowerCase().includes(term.toLowerCase())
+      );
+      setFilteredArticles(filtered);
+    }
+  };
 
   const formatTimeAgo = (dateString) => {
     const date = new Date(dateString);
@@ -38,15 +56,22 @@ function Home() {
 
   return (
     <div className="Home">
-      <h2>Welcome to the News Portal</h2>
-      {message && <p>{message}</p>}
-      <div className="articles">
-        {articles.map((article) => (
+      <h2>Articles</h2>
+      {message && <div className="alert">{message}</div>}
+      <form className="search-form">
+        <input
+          type="text"
+          placeholder="Search articles..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
+      </form>
+      <div className="articles-grid">
+        {filteredArticles.map((article) => (
           <div key={article.titleId} className="article-card">
             <h3>{article.title}</h3>
-            <p>{article.content.substring(0, 100)}...</p>
-            <p><small>By {article.author}</small></p>
-            <p><small>{formatTimeAgo(article.createdAt)}</small></p>
+            <p>{article.content}</p>
+            <p><small>Created at: {formatTimeAgo(article.createdAt)}</small></p>
             <Link to={`/articles/${article.titleId}`}>Read more</Link>
           </div>
         ))}

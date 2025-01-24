@@ -104,7 +104,7 @@ public class ArticlesService {
 
 	public boolean verifyUserOfArticle(Integer articleId, User user) {
 		Articles retrievedArticle = this.findArticleById(articleId);
-		if (!retrievedArticle.equals(null) && retrievedArticle.getUser().getId() == user.getId()) {
+		if (!retrievedArticle.equals(null) && retrievedArticle.getUser().getId().equals(user.getId())) {
 			return true;
 		}
 		return false;

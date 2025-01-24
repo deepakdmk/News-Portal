@@ -17,7 +17,31 @@ body {
   margin-bottom: 20px;
 }
 
-.articles {
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.search-form input {
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;
+}
+
+.articles-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -47,6 +71,17 @@ body {
 .article-card p {
   margin: 5px 0;
   color: #555;
+  max-height: 4.5em; /* Limit the height */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+}
+
+.article-card small {
+  display: block;
+  color: #888;
 }
 
 .article-card a {

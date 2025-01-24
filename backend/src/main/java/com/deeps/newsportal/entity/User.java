@@ -31,7 +31,7 @@ import jakarta.persistence.Table;
 public class User implements UserDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(nullable = false)
 	private Integer id;
 
@@ -52,7 +52,6 @@ public class User implements UserDetails {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
-	// change this is lazy loading later
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Articles> articles;
