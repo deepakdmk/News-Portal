@@ -109,6 +109,15 @@ public class Articles {
 
 	public void setUser(User user) {
 		this.user = user;
+
+	}
+
+	public String getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(String isActive) {
+		this.isActive = isActive;
 	}
 
 	@Override
@@ -116,7 +125,5 @@ public class Articles {
 		return "Articles [id=" + id + ", title=" + title + ", content=" + content + ", createdAt=" + createdAt
 				+ ", updatedAt=" + updatedAt + ", user=" + user + ", isActive=" + isActive + "]";
 	}
-
-
 
 }

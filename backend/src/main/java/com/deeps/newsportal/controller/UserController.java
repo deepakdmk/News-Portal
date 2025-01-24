@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.deeps.newsportal.dto.UserDto;
 import com.deeps.newsportal.entity.User;
 import com.deeps.newsportal.services.UserService;
 
@@ -22,14 +23,13 @@ public class UserController {
 	}
 
 	@GetMapping("/me")
-	public ResponseEntity<User> authenticatedUser() {
+	public ResponseEntity<?> authenticatedUser() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
 		User currentUser = (User) authentication.getPrincipal();
-
-		return ResponseEntity.ok(currentUser);
+		UserDto response = userService.convertUserToDto(currentUser);
+		return ResponseEntity.ok(response);
 	}
-
+	
 	@GetMapping("/")
 	public ResponseEntity<List<User>> allUsers() {
 		List<User> users = userService.allUsers();

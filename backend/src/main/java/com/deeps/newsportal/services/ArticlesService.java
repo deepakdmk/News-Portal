@@ -1,5 +1,10 @@
 package com.deeps.newsportal.services;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +38,7 @@ public class ArticlesService {
 		ArticlesDto articleDto = new ArticlesDto();
 		articleDto.setTitleId(article.getId());
 		articleDto.setTitle(article.getTitle());
-		articleDto.setContent(article.getContent());
+		articleDto.setContent(readContentFromFile(article.getContent()));
 		articleDto.setCreatedAt(article.getCreatedAt().toString());
 		articleDto.setModifiedAt(article.getUpdatedAt().toString());
 		articleDto.setAuthor(article.getUser().getFullName());
@@ -41,7 +46,7 @@ public class ArticlesService {
 	}
 
 	public List<ArticlesDto> getAllArticlesPublic() {
-		return getAllArticles(articlesRepo.findAll());
+		return getAllArticles(articlesRepo.findAllActiveArticles());
 
 	}
 
@@ -55,7 +60,7 @@ public class ArticlesService {
 		return article;
 	}
 
-	/// Retrieve all articles associated with user id
+	/// Retrieve all articles 
 	public List<ArticlesDto> getAllArticles(List<Articles> articles) {
 		List<ArticlesDto> response = new ArrayList<>();
 		for (Articles temp : articles) {
@@ -64,7 +69,7 @@ public class ArticlesService {
 			responseDto.setAuthor(temp.getUser().getFullName());
 			responseDto.setTitle(temp.getTitle());
 			responseDto.setTitleId(temp.getId());
-			responseDto.setContent(temp.getContent());
+			responseDto.setContent(readContentFromFile(temp.getContent()));
 			responseDto.setCreatedAt(temp.getCreatedAt().toString());
 			responseDto.setModifiedAt(temp.getUpdatedAt().toString());
 			response.add(responseDto);
@@ -80,26 +85,27 @@ public class ArticlesService {
 	// update an article
 	public ArticlesDto updateArticle(ArticlesDto articleDto) {
 		Articles article = this.findArticleById(articleDto.getTitleId());
-		System.out.println(article);
 		article.setTitle(articleDto.getTitle());
-		article.setContent(articleDto.getContent());
+		article.setContent(saveContentToFile(articleDto.getContent(), article.getUser().getId(), article.getId()));
 		articlesRepo.save(article);
 		articleDto.setStatus(0);
 		return articleDto;
 	}
 
 	// create an article
-	public Articles createArticle(ArticlesDto articlesDto, User currentUser) {
+	public ArticlesDto createArticle(ArticlesDto articlesDto, User currentUser) {
 		Articles newArticle = new Articles();
 		newArticle.setTitle(articlesDto.getTitle());
-		newArticle.setContent(articlesDto.getContent());
 		Optional<User> optionalUser = userRepo.findById(currentUser.getId());
 		if (optionalUser.isPresent()) {
 			newArticle.setUser(optionalUser.get());
-			return articlesRepo.save(newArticle);
+			newArticle.setIsActive("A");
+			newArticle = articlesRepo.save(newArticle);
+			newArticle.setContent(saveContentToFile(articlesDto.getContent(), currentUser.getId(), newArticle.getId()));
+			articlesRepo.save(newArticle);
 		}
+		return articlesDto;
 
-		return newArticle;
 	}
 
 	public boolean verifyUserOfArticle(Integer articleId, User user) {
@@ -112,7 +118,32 @@ public class ArticlesService {
 
 	// delete article
 	public void deleteArticle(Integer articleId) {
-		articlesRepo.deleteById(articleId);
+		Articles article = this.findArticleById(articleId);
+		article.setIsActive("D");
+		articlesRepo.save(article);
 	}
 
+	private String saveContentToFile(String content, Integer userId, Integer titleId) {
+		String directoryPath = "articles" + userId + "/" + titleId;
+		String filePath = directoryPath + "/content.txt";
+		File directory = new File(directoryPath);
+		if (!directory.exists()) {
+			directory.mkdirs();
+		}
+		try (FileWriter writer = new FileWriter(filePath)) {
+			writer.write(content);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return filePath;
+	}
+
+	private String readContentFromFile(String filePath) {
+		try {
+			return new String(Files.readAllBytes(Paths.get(filePath)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

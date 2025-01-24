@@ -2,6 +2,7 @@ package com.deeps.newsportal.services;
 
 import org.springframework.stereotype.Service;
 
+import com.deeps.newsportal.dto.UserDto;
 import com.deeps.newsportal.entity.User;
 import com.deeps.newsportal.repositories.UserRepository;
 
@@ -23,4 +24,17 @@ public class UserService {
 
 		return users;
 	}
+
+	public UserDto convertUserToDto(User user) {
+		UserDto userDto = new UserDto();
+		userDto.setFullName(user.getFullName());
+		userDto.setEmail(user.getEmail());
+		userDto.setProfilePic(user.getProfilePic());
+		userDto.setCreatedAt(user.getCreatedAt().toString());
+		userDto.setUpdatedAt(user.getUpdatedAt().toString());
+		userDto.setArticles(user.getArticles());
+
+		return userDto;
+	}
+
 }

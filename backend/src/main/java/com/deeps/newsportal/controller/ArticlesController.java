@@ -78,12 +78,9 @@ public class ArticlesController {
 	@PostMapping("/submit")
 	public ResponseEntity<?> submitArticle(@RequestBody ArticlesDto articlesDto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if (!(authentication instanceof AnonymousAuthenticationToken)) {
 			User currentUser = (User) authentication.getPrincipal();
-			Articles newArticle = articleService.createArticle(articlesDto, currentUser);
+			ArticlesDto newArticle = articleService.createArticle(articlesDto, currentUser);
 			return ResponseEntity.ok(newArticle);
-		}
-		throw new AccessDeniedException("Authentication required");
 	}
 
 	// Update an article

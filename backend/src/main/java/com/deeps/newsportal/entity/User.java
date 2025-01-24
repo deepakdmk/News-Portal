@@ -52,6 +52,9 @@ public class User implements UserDetails {
 	@Column(name = "updated_at")
 	private Date updatedAt;
 
+	@Column(name = "profile_pic")
+	private String profilePic;
+
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Articles> articles;
@@ -65,13 +68,24 @@ public class User implements UserDetails {
 		super();
 	}
 
-	public User(String fullName, String email, String password, Date createdAt, Date updatedAt) {
+	public User(String fullName, String email, String password, Date createdAt, Date updatedAt, String profilePic,
+			List<Articles> articles) {
 		super();
 		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
+		this.profilePic = profilePic;
+		this.articles = articles;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
 	}
 
 	public Integer getId() {
