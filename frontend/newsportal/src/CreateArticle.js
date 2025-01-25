@@ -8,7 +8,6 @@ function CreateArticle() {
     title: '',
     content: '',
   });
-
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -26,7 +25,7 @@ function CreateArticle() {
     setLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.post('http://localhost:8080/articles/submit', formData, {
+      await axios.post('http://localhost:8080/articles/articles', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -34,14 +33,28 @@ function CreateArticle() {
       setMessage('Article created successfully!');
       navigate('/articles');
     } catch (error) {
-      setMessage('Failed to create article. Please try again.');
+      if (error.response && error.response.data && error.response.data.message) {
+        setMessage(error.response.data.message);
+      } else {
+        setMessage('Failed to create article. Please try again.');
+      }
     }
     setLoading(false);
+    setTimeout(() => setMessage(''), 5000); // Clear message after 5 seconds
+  };
+
+  const handleCancel = () => {
+    navigate('/articles');
+  };
+
+  const applyStyle = (style) => {
+    document.execCommand(style, false, null);
   };
 
   return (
     <div className="CreateArticle">
       <h2>Create Article</h2>
+      {message && <div className="alert">{message}</div>}
       <form onSubmit={handleSubmit}>
         <div>
           <label>Title:</label>
@@ -55,18 +68,26 @@ function CreateArticle() {
         </div>
         <div>
           <label>Content:</label>
+          <div className="editor-toolbar">
+            <button type="button" onClick={() => applyStyle('bold')}><b>B</b></button>
+            <button type="button" onClick={() => applyStyle('italic')}><i>I</i></button>
+            <button type="button" onClick={() => applyStyle('underline')}><u>U</u></button>
+          </div>
           <textarea
             name="content"
             value={formData.content}
             onChange={handleChange}
             required
+            className="editor"
           />
         </div>
         <button type="submit" disabled={loading}>
           {loading ? 'Creating...' : 'Create'}
         </button>
+        <button type="button" onClick={handleCancel} disabled={loading}>
+          Cancel
+        </button>
       </form>
-      {message && <p>{message}</p>}
     </div>
   );
 }

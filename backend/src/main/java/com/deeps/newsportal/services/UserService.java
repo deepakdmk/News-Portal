@@ -1,13 +1,13 @@
 package com.deeps.newsportal.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.deeps.newsportal.dto.UserDto;
 import com.deeps.newsportal.entity.User;
 import com.deeps.newsportal.repositories.UserRepository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UserService {

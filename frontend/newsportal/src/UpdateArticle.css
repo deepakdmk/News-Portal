@@ -6,7 +6,7 @@ body {
 }
 
 .UpdateArticle {
-  max-width: 600px;
+  max-width: 800px;
   margin: 50px auto;
   padding: 20px;
   background-color: #fff;
@@ -18,6 +18,16 @@ body {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 20px;
+}
+
+.UpdateArticle .alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .UpdateArticle form div {
@@ -37,6 +47,30 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
+}
+
+.UpdateArticle textarea {
+  height: 200px; /* Default height */
+  resize: vertical; /* Allow vertical resizing */
+}
+
+.UpdateArticle .editor-toolbar {
+  margin-bottom: 10px;
+}
+
+.UpdateArticle .editor-toolbar button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.UpdateArticle .editor-toolbar button:hover {
+  background-color: #0056b3;
 }
 
 .UpdateArticle button {
@@ -65,9 +99,4 @@ body {
 
 .UpdateArticle .delete-button:hover:not(:disabled) {
   background-color: #ff1a1a;
-}
-
-.UpdateArticle p {
-  text-align: center;
-  color: red;
 }

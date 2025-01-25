@@ -43,12 +43,12 @@ function ArticleManagement() {
     <div className="ArticleManagement">
       <h2>Your Articles</h2>
       {message && <div className="alert">{message}</div>}
-      <button onClick={handleCreateArticle}>Create Article</button>
+      <button className="create-article-button" onClick={handleCreateArticle}>Create Article</button>
       <ul>
         {articles.map((article) => (
           <li key={article.titleId}>
             <h3>{article.title}</h3>
-            <p>{article.content}</p>
+            <p className="article-content">{article.content}</p>
             <p><small>Created at: {article.createdAt}</small></p>
             <p><small>Modified at: {article.modifiedAt}</small></p>
             <button onClick={() => handleModifyArticle(article.titleId)}>Modify</button>

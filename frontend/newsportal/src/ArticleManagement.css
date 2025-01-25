@@ -46,6 +46,17 @@ body {
   color: #555;
 }
 
+.article-content {
+  margin: 5px 0;
+  color: #555;
+  max-height: 4.5em; /* Limit the height */
+  overflow: hidden; /* Hide overflow */
+  text-overflow: ellipsis; /* Add ellipsis */
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+}
+
 .ArticleManagement button {
   margin-right: 10px;
   margin-bottom: 20px;
@@ -65,6 +76,26 @@ body {
 .ArticleManagement button:disabled {
   background-color: #cccccc;
   cursor: not-allowed;
+}
+
+.create-article-button {
+  background-color: #28a745;
+  font-size: 1.2rem;
+  padding: 12px 24px;
+}
+
+.create-article-button:hover {
+  background-color: #218838;
+}
+
+.alert {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .ArticleManagement small {

@@ -6,22 +6,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.deeps.newsportal.dto.ArticlesDto;
 import com.deeps.newsportal.entity.Articles;
 import com.deeps.newsportal.entity.User;
-import com.deeps.newsportal.exceptions.ArticleException;
 import com.deeps.newsportal.repositories.ArticlesRepository;
 import com.deeps.newsportal.repositories.UserRepository;
-
-import jakarta.transaction.Transactional;
 
 @Service
 public class ArticlesService {
@@ -60,7 +54,7 @@ public class ArticlesService {
 		return article;
 	}
 
-	/// Retrieve all articles 
+	/// Retrieve all articles
 	public List<ArticlesDto> getAllArticles(List<Articles> articles) {
 		List<ArticlesDto> response = new ArrayList<>();
 		for (Articles temp : articles) {

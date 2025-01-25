@@ -1,15 +1,12 @@
 package com.deeps.newsportal.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,10 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.deeps.newsportal.dto.ArticlesDto;
 import com.deeps.newsportal.entity.Articles;
 import com.deeps.newsportal.entity.User;
-import com.deeps.newsportal.exceptions.ArticleException;
-import com.deeps.newsportal.repositories.ArticlesRepository;
 import com.deeps.newsportal.services.ArticlesService;
-import com.deeps.newsportal.services.UserService;
 
 @RequestMapping("/articles")
 @RestController
@@ -78,9 +72,9 @@ public class ArticlesController {
 	@PostMapping("/submit")
 	public ResponseEntity<?> submitArticle(@RequestBody ArticlesDto articlesDto) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-			User currentUser = (User) authentication.getPrincipal();
-			ArticlesDto newArticle = articleService.createArticle(articlesDto, currentUser);
-			return ResponseEntity.ok(newArticle);
+		User currentUser = (User) authentication.getPrincipal();
+		ArticlesDto newArticle = articleService.createArticle(articlesDto, currentUser);
+		return ResponseEntity.ok(newArticle);
 	}
 
 	// Update an article

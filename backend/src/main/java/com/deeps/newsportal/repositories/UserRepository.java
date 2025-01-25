@@ -9,7 +9,7 @@ import com.deeps.newsportal.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-	
+
 	Optional<User> findByEmail(String email);
 
 }

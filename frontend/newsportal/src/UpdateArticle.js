@@ -95,6 +95,10 @@ function UpdateArticle() {
     }
   };
 
+  const applyStyle = (style) => {
+    document.execCommand(style, false, null);
+  };
+
   return (
     <div className="UpdateArticle">
       <h2>Update Article</h2>
@@ -112,11 +116,17 @@ function UpdateArticle() {
         </div>
         <div>
           <label>Content:</label>
+          <div className="editor-toolbar">
+            <button type="button" onClick={() => applyStyle('bold')}><b>B</b></button>
+            <button type="button" onClick={() => applyStyle('italic')}><i>I</i></button>
+            <button type="button" onClick={() => applyStyle('underline')}><u>U</u></button>
+          </div>
           <textarea
             name="content"
             value={formData.content}
             onChange={handleChange}
             required
+            className="editor"
           />
         </div>
         <button type="submit" disabled={loading}>

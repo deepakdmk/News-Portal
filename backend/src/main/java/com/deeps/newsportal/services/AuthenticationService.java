@@ -7,11 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.deeps.newsportal.dto.ResponseDto;
 import com.deeps.newsportal.dto.LoginUserDto;
 import com.deeps.newsportal.dto.RegisterUserDto;
 import com.deeps.newsportal.entity.User;
-import com.deeps.newsportal.exceptions.UserException;
 import com.deeps.newsportal.repositories.UserRepository;
 
 @Service
